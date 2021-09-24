@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "jest",
-    "webpack:watch": "webpack --config webpack.config.js --watch",
+    "watch": "webpack --config webpack.config.js --watch",
     "start": "webpack serve"
   },
   "author": "Anton Nekipelov",
