@@ -8,9 +8,6 @@ interface GitHubSearchAppProps {
 }
 
 export class GitHubSearchApp extends React.Component<GitHubSearchAppProps> {
-    public componentDidMount() {
-      this.loadRepos();
-    }
     public render() {
         return (
             <div>
@@ -21,15 +18,11 @@ export class GitHubSearchApp extends React.Component<GitHubSearchAppProps> {
             <BrowserRouter>
               <Switch>
                 <Route path="/">
-                  <MainPage></MainPage>
+                  <MainPage githubClient={this.props.githubClient}></MainPage>
                 </Route>
               </Switch>
             </BrowserRouter>
           </div>
         );
-    }
-    private async loadRepos() {
-        const repositories = await this.props.githubClient.searchRepositories();
-        console.log("response 2", repositories);
     }
 }

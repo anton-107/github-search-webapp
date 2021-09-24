@@ -1,21 +1,34 @@
 import React from "react";
+import { GitHubRepository } from "../github-client/interfaces";
 
-export class SearchResultsComponent extends React.Component {
+interface SearchResultsComponentProps {
+  repositories: GitHubRepository[];
+}
+
+export class SearchResultsComponent extends React.Component<SearchResultsComponentProps> {
   public render() {
     return (
       <div>
         <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Owner</th>
+              <th>Stars</th>
+              <th>Link</th>
+              <th>Details</th>
+            </tr>
+          </thead>
           <tbody>
-            <tr>
-              <td>1.1</td>
-              <td>1.2</td>
-              <td>1.3</td>
-            </tr>
-            <tr>
-              <td>2.1</td>
-              <td>2.2</td>
-              <td>2.3</td>
-            </tr>
+            {this.props.repositories.map(repository => (
+              <tr key={repository.id}>
+                <td>{repository.name}</td>
+                <td>{repository.owner.login}</td>
+                <td>{repository.stargazersCount}</td>
+                <td>{repository.fullName}</td>
+                <td>Show details</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

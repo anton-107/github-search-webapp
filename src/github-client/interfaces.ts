@@ -2,11 +2,13 @@ interface GitHubUser {
   login: string;
 }
 
-interface GitHubRepository {
+export interface GitHubRepository {
   id: number;
+  name: string;
   fullName: string;
   owner: GitHubUser;
   stargazersCount: number;
+  htmlURL: string;
 }
 
 export interface GitHubSearchResult {
