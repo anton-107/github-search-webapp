@@ -56,16 +56,22 @@ export class NavigationButtonsComponent extends React.Component<NavigationButton
     let paginationLine = (<span></span>);
     if (paginationDetails.isIntialized) {
       paginationLine = (
-        <div>
-          {paginationDetails.firstDisplayedItem}-{paginationDetails.lastDisplayedItem} of {this.props.pagination.currentResultsTotal}
-        </div>
+        <small>
+          Showing {paginationDetails.firstDisplayedItem}-{paginationDetails.lastDisplayedItem} of {this.props.pagination.currentResultsTotal} {this.props.pagination.currentResultsTotal === 1 ? 'repository' : 'repositories'}
+        </small>
       );
     }
 
     return (
       <div>
-        <button onClick={() => this.props.onMoveBackward()} style={{visibility: paginationDetails.hasPreviousPage ? 'visible' : 'hidden'}}>Back</button>
-        <button onClick={() => this.props.onMoveForward()} style={{visibility: paginationDetails.hasNextPage  ? 'visible' : 'hidden'}}>Forward</button>
+        <div className="columns">
+          <div className="column">
+            <button className="button is-fullwidth" onClick={() => this.props.onMoveBackward()} style={{visibility: paginationDetails.hasPreviousPage ? 'visible' : 'hidden'}}>Back</button>
+          </div>
+          <div className="column">
+            <button className="button is-primary is-fullwidth" onClick={() => this.props.onMoveForward()} style={{visibility: paginationDetails.hasNextPage  ? 'visible' : 'hidden'}}>Forward</button>
+          </div>
+        </div>
         {paginationLine}
       </div>
     );

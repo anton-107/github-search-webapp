@@ -27,11 +27,21 @@ export class RepositoryDetailsPage extends React.Component<RepositoryDetailsPage
   public render() {
     return (
       <div>
-        <Link to="/">← Back to search</Link>
-        <h3>{this.props.owner}/{this.props.name}</h3>
-        <p>Last 3 commits by: {this.getUniqueAuthorsOfLastCommits()}</p>
-        <p>Last fork created by: {this.getLastForkUserLogin()}</p>
-        <p>The owner of the last fork has this in their biography: {this.state.mostRecentForkAuthorBio || '<Their BIO is empty>'}</p>
+        <div className="columns">
+          <div className="column is-one-fifth">
+            <Link to="/" className="button">← Back to search</Link>
+          </div>
+          <div className="column">
+            <div className="box">
+              <div className="content">
+                <h3>{this.props.owner}/{this.props.name}</h3>
+                <p>Last 3 commits by: {this.getUniqueAuthorsOfLastCommits()}</p>
+                <p>Last fork created by: {this.getLastForkUserLogin()}</p>
+                <p>The owner of the last fork has this in their biography: {this.state.mostRecentForkAuthorBio || '<Their BIO is empty>'}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

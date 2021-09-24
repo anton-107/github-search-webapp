@@ -30,8 +30,12 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
   public render() {
     return (
       <div>
-        <div><SearchBarComponent initialValue={this.initialSearchTerm} onNewSearch={(searchTerm) => this.changeSearchTerm(searchTerm)} /></div>
-        <div><NavigationButtonsComponent pagination={{...this.state.pagination}} onMoveBackward={() => this.showPreviousPage()} onMoveForward={() => this.showNextPage()} /></div>
+        <div className="box">
+          <div className="columns">
+            <div className="column"><SearchBarComponent initialValue={this.initialSearchTerm} onNewSearch={(searchTerm) => this.changeSearchTerm(searchTerm)} /></div>
+            <div className="column is-one-fifth"><NavigationButtonsComponent pagination={{...this.state.pagination}} onMoveBackward={() => this.showPreviousPage()} onMoveForward={() => this.showNextPage()} /></div>
+          </div>
+        </div>
         <div><SearchResultsComponent repositories={this.state.repositories} /></div>
       </div>
     );

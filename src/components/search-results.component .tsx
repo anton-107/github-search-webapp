@@ -10,7 +10,7 @@ export class SearchResultsComponent extends React.Component<SearchResultsCompone
   public render() {
     return (
       <div>
-        <table>
+        <table className="table is-striped is-hoverable is-fullwidth">
           <thead>
             <tr>
               <th>Name</th>
