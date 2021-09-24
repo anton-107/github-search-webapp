@@ -1,13 +1,21 @@
 import { ResourceFetcher } from "../web-api/interfaces";
-import { GitHubClient, GitHubSearchResult } from "./interfaces";
+import { GitHubClient, GitHubCommit, GitHubFork, GitHubRepository, GitHubSearchResult, GitHubUser } from "./interfaces";
+
+interface OriginGitHubUser {
+  login: string;
+  url: string;
+  bio: string;
+}
 
 interface OriginGitHubRepository {
   id: number;
   name: string;
   full_name: string;
-  owner: { login: string };
+  owner: OriginGitHubUser;
   stargazers_count: number;
   html_url: string;
+  commits_url: string;
+  forks_url: string;
 }
 interface OriginGitHubSearchResult {
   total_count: number;
@@ -15,6 +23,12 @@ interface OriginGitHubSearchResult {
 }
 interface GitHubClientConfiguration {
   numberOfRepositoriesPerPage: number;
+}
+interface OriginGitHubCommit {
+  author: OriginGitHubUser;
+}
+interface OriginGitHubFork {
+  owner: OriginGitHubUser;
 }
 
 export class GitHubClientImpl implements GitHubClient {
@@ -26,20 +40,50 @@ export class GitHubClientImpl implements GitHubClient {
     const result = {
       resultsPerPage: this.configuation.numberOfRepositoriesPerPage,
       totalCount: githubResults.total_count,
-      items: githubResults.items.map(x => {
-        return {
-          id: x.id,
-          name: x.name,
-          fullName: x.full_name,
-          owner: {
-            login: x.owner.login,
-          },
-          stargazersCount: x.stargazers_count,
-          htmlURL: x.html_url,
-        }
-      })
+      items: githubResults.items.map(x => this.mapFrom(x))
     };
 
     return result;
+  }
+  public async getRepository(owner: string, name: string): Promise<GitHubRepository> {
+    const githubResult = await this.resourceFetcher.fetch<OriginGitHubRepository>(`https://api.github.com/repos/${owner}/${name}`);
+    return this.mapFrom(githubResult);
+  }
+  public async getCommits(commitsURL: string): Promise<GitHubCommit[]> {
+    const githubResult = await this.resourceFetcher.fetch<OriginGitHubCommit[]>(commitsURL.replace('{/sha}', ''));
+    return githubResult.map(x => {
+      return {
+        authorLogin: x.author?.login
+      };
+    });
+  }
+  public async getForks(forksURL: string): Promise<GitHubFork[]> {
+    const githubResult = await this.resourceFetcher.fetch<OriginGitHubFork[]>(forksURL);
+    return githubResult.map(x => {
+      return {
+        ownerLogin: x.owner?.login,
+        ownerURL: x.owner?.url,
+      };
+    });
+  }
+  public async getUser(userURL: string): Promise<GitHubUser> {
+    const githubResult = await this.resourceFetcher.fetch<OriginGitHubUser>(userURL);
+    return githubResult;
+  }
+  private mapFrom(repository: OriginGitHubRepository): GitHubRepository {
+    return {
+      id: repository.id,
+      name: repository.name,
+      fullName: repository.full_name,
+      owner: {
+        login: repository.owner.login,
+        url: repository.owner.url,
+        bio: undefined,
+      },
+      stargazersCount: repository.stargazers_count,
+      htmlURL: repository.html_url,
+      commitsURL: repository.commits_url,
+      forksURL: repository.forks_url,
+    }
   }
 }

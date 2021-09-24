@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { GitHubRepository } from "../github-client/interfaces";
 
 interface SearchResultsComponentProps {
@@ -25,8 +26,8 @@ export class SearchResultsComponent extends React.Component<SearchResultsCompone
                 <td>{repository.name}</td>
                 <td>{repository.owner.login}</td>
                 <td>{repository.stargazersCount}</td>
-                <td>{repository.fullName}</td>
-                <td>Show details</td>
+                <td><a target='_blank' href={repository.htmlURL}>{repository.fullName}</a></td>
+                <td><Link to={`/repository/${repository.owner.login}/${repository.name}`}>Show details</Link></td>
               </tr>
             ))}
           </tbody>

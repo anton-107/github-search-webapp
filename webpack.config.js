@@ -20,9 +20,11 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
     },
     devServer: {
-        static: {   
-            directory: path.join(__dirname),
+        static: {
+            directory: path.join(__dirname, 'dist'),
+            serveIndex: true,
+            publicPath: '/'
         },
-        historyApiFallback: true,
+        historyApiFallback: true
     },
 };
