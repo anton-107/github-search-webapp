@@ -27,7 +27,7 @@ export class SearchBarComponent extends React.Component<SearchBarComponentProps>
   }
   private triggerSearch() {
     const searchTerm = this.searchInput.current?.value;
-    if (searchTerm && searchTerm.length > 1) {
+    if (searchTerm && searchTerm.length >= 1) {
       this.props.onNewSearch(searchTerm);
     }
   }

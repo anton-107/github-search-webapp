@@ -41,7 +41,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
     );
   }
   private async changeSearchTerm(searchTerm: string) {
-    this.setState({currentSearchTerm: searchTerm}, this.loadSearchResults);
+    this.setState({currentSearchTerm: searchTerm, pagination: {currentPage: 1, currentResultsTotal: undefined, currentResultsPerPage: undefined}}, this.loadSearchResults);
     localStorage.setItem('searchTerm', searchTerm);
   }
   private showPreviousPage() {
