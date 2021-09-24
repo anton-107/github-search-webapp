@@ -13,14 +13,18 @@ interface OriginGitHubSearchResult {
   total_count: number;
   items: OriginGitHubRepository[];
 }
+interface GitHubClientConfiguration {
+  numberOfRepositoriesPerPage: number;
+}
 
 export class GitHubClientImpl implements GitHubClient {
-  constructor(private resourceFetcher: ResourceFetcher) {
+  constructor(private configuation: GitHubClientConfiguration, private resourceFetcher: ResourceFetcher) {
   }
-  public async searchRepositories(query: string): Promise<GitHubSearchResult> {
+  public async searchRepositories(query: string, page: number = 1): Promise<GitHubSearchResult> {
     
-    const githubResults = await this.resourceFetcher.fetch<OriginGitHubSearchResult>(`https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc`);
+    const githubResults = await this.resourceFetcher.fetch<OriginGitHubSearchResult>(`https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc&per_page=${this.configuation.numberOfRepositoriesPerPage}&page=${page}`);
     const result = {
+      resultsPerPage: this.configuation.numberOfRepositoriesPerPage,
       totalCount: githubResults.total_count,
       items: githubResults.items.map(x => {
         return {

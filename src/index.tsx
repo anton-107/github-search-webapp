@@ -5,7 +5,7 @@ import { GitHubClientImpl } from "./github-client/github-client";
 import { FetchWrapper } from "./web-api/fetch-wrapper";
 
 const fetchWrapper = new FetchWrapper();
-const gitHubClient = new GitHubClientImpl(fetchWrapper);
+const gitHubClient = new GitHubClientImpl({numberOfRepositoriesPerPage: 10}, fetchWrapper);
 const App = () => <GitHubSearchApp githubClient={gitHubClient} />;
 
 ReactDOM.render(

@@ -1,6 +1,6 @@
 import React from "react";
 import { GitHubClient, GitHubRepository } from "../github-client/interfaces";
-import { NavigationButtonsComponent } from "./navigation-buttons.components";
+import { NavigationButtonsComponent, Pagination } from "./navigation-buttons.components";
 import { SearchBarComponent } from "./search-bar.component";
 import { SearchResultsComponent } from "./search-results.component ";
 
@@ -9,34 +9,38 @@ interface MainPageProps {
 }
 interface MainPageState {
   repositories: GitHubRepository[];
+  currentSearchTerm: string;
+  pagination: Pagination;
 }
 
 export class MainPage extends React.Component<MainPageProps, MainPageState> {
   constructor(props: MainPageProps) {
     super(props);
-    this.state = { repositories: [] };
-  }
-  public componentDidMount() {
-    this.loadRepositories();
+    const initialPagination = { currentPage: 1 };
+    this.state = { repositories: [], currentSearchTerm: '', pagination: initialPagination };
   }
   public render() {
     return (
       <div>
-        <div><SearchBarComponent onNewSearch={(searchTerm) => this.searchRepositories(searchTerm)} /></div>
-        <div><NavigationButtonsComponent /></div>
+        <div><SearchBarComponent onNewSearch={(searchTerm) => this.changeSearchTerm(searchTerm)} /></div>
+        <div><NavigationButtonsComponent pagination={{...this.state.pagination}} onMoveBackward={() => this.showPreviousPage()} onMoveForward={() => this.showNextPage()} /></div>
         <div><SearchResultsComponent repositories={this.state.repositories} /></div>
       </div>
-    )
+    );
   }
-  // todo: remove this method
-  private async loadRepositories() {
-    const repositories = await this.props.githubClient.searchRepositories('spark');
-    console.log("response 3", repositories);
-    this.setState({repositories: repositories.items});
+  private async changeSearchTerm(searchTerm: string) {
+    this.setState({currentSearchTerm: searchTerm}, this.loadSearchResults);
   }
-  private async searchRepositories(searchTerm: string) {
-    const repositories = await this.props.githubClient.searchRepositories(searchTerm);
+  private showPreviousPage() {
+    this.setState(state => { return {...state, pagination: { ...state.pagination, currentPage: Math.max(1, state.pagination.currentPage - 1)} }}, () => this.loadSearchResults())
+  }
+  private showNextPage() {
+    this.setState(state => { return {...state, pagination: { ...state.pagination, currentPage: state.pagination.currentPage + 1}} }, () => this.loadSearchResults());
+  }
+  private async loadSearchResults() {
+    console.log('loadSearchResults', this.state);
+    const repositories = await this.props.githubClient.searchRepositories(this.state.currentSearchTerm, this.state.pagination.currentPage);
     console.log("response 4", repositories);
-    this.setState({repositories: repositories.items});
+    this.setState(state => { return {...state, repositories: repositories.items, pagination: {...state.pagination, currentResultsTotal: repositories.totalCount, currentResultsPerPage: repositories.resultsPerPage}}});
   }
 }

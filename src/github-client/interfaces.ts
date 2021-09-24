@@ -13,9 +13,10 @@ export interface GitHubRepository {
 
 export interface GitHubSearchResult {
   totalCount: number;
+  resultsPerPage: number;
   items: GitHubRepository[];
 }
 
 export interface GitHubClient {
-  searchRepositories(query: string): Promise<GitHubSearchResult>;
+  searchRepositories(query: string, page: number): Promise<GitHubSearchResult>;
 }
