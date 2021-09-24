@@ -54,7 +54,7 @@ export class NavigationButtonsComponent extends React.Component<NavigationButton
   public render() {
     const paginationDetails = new PaginatonDetails(this.props.pagination);
     let paginationLine = (<span></span>);
-    if (paginationDetails.isIntialized) {
+    if (paginationDetails.isIntialized && this.props.pagination.currentResultsTotal && this.props.pagination.currentResultsTotal > 0) {
       paginationLine = (
         <small>
           Showing {paginationDetails.firstDisplayedItem}-{paginationDetails.lastDisplayedItem} of {this.props.pagination.currentResultsTotal} {this.props.pagination.currentResultsTotal === 1 ? 'repository' : 'repositories'}
