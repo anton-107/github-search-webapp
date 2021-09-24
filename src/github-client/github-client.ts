@@ -17,9 +17,9 @@ interface OriginGitHubSearchResult {
 export class GitHubClientImpl implements GitHubClient {
   constructor(private resourceFetcher: ResourceFetcher) {
   }
-  public async searchRepositories(): Promise<GitHubSearchResult> {
+  public async searchRepositories(query: string): Promise<GitHubSearchResult> {
     
-    const githubResults = await this.resourceFetcher.fetch<OriginGitHubSearchResult>('https://api.github.com/search/repositories?q=apache+language:scala&sort=stars&order=desc');
+    const githubResults = await this.resourceFetcher.fetch<OriginGitHubSearchResult>(`https://api.github.com/search/repositories?q=${query}&sort=stars&order=desc`);
     const result = {
       totalCount: githubResults.total_count,
       items: githubResults.items.map(x => {

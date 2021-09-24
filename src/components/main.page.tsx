@@ -22,15 +22,21 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
   public render() {
     return (
       <div>
-        <div><SearchBarComponent /></div>
+        <div><SearchBarComponent onNewSearch={(searchTerm) => this.searchRepositories(searchTerm)} /></div>
         <div><NavigationButtonsComponent /></div>
         <div><SearchResultsComponent repositories={this.state.repositories} /></div>
       </div>
     )
   }
+  // todo: remove this method
   private async loadRepositories() {
-      const repositories = await this.props.githubClient.searchRepositories();
-      console.log("response 3", repositories);
-      this.setState({repositories: repositories.items});
+    const repositories = await this.props.githubClient.searchRepositories('spark');
+    console.log("response 3", repositories);
+    this.setState({repositories: repositories.items});
+  }
+  private async searchRepositories(searchTerm: string) {
+    const repositories = await this.props.githubClient.searchRepositories(searchTerm);
+    console.log("response 4", repositories);
+    this.setState({repositories: repositories.items});
   }
 }

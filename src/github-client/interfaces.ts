@@ -17,5 +17,5 @@ export interface GitHubSearchResult {
 }
 
 export interface GitHubClient {
-  searchRepositories(): Promise<GitHubSearchResult>;
+  searchRepositories(query: string): Promise<GitHubSearchResult>;
 }
