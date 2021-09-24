@@ -4,13 +4,23 @@ import { GitHubRepository } from "../github-client/interfaces";
 
 interface SearchResultsComponentProps {
   repositories: GitHubRepository[];
+  isLoading: boolean;
+  isAtLeastOneSearchDone: boolean;
 }
 
 export class SearchResultsComponent extends React.Component<SearchResultsComponentProps> {
   public render() {
     return (
       <div>
-        <table className="table is-striped is-hoverable is-fullwidth">
+        <progress className="progress is-small is-info" max="100" style={{visibility: this.props.isLoading ? 'visible' : 'hidden'}}></progress>
+        {this.props.isAtLeastOneSearchDone && this.props.repositories.length === 0 && (
+        <div className="box">
+          <div className="content" style={{textAlign: 'center'}}>
+            <big>No repositories found</big>
+          </div>
+        </div>
+        )}
+        <table className="table is-striped is-hoverable is-fullwidth" style={{opacity: this.props.isLoading ? '0.4' : '1.0', visibility: this.props.repositories.length > 0 ? 'visible' : 'hidden' }}>
           <thead>
             <tr>
               <th>Name</th>

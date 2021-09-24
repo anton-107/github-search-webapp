@@ -11,6 +11,8 @@ interface MainPageState {
   repositories: GitHubRepository[];
   currentSearchTerm: string;
   pagination: Pagination;
+  isSearching: boolean;
+  isAtLeastOneSearchDone: boolean;
 }
 
 export class MainPage extends React.Component<MainPageProps, MainPageState> {
@@ -20,7 +22,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
     super(props);
     const initialPagination = { currentPage: 1 };
     this.initialSearchTerm = localStorage.getItem('searchTerm') || '';
-    this.state = { repositories: [], currentSearchTerm: this.initialSearchTerm, pagination: initialPagination };
+    this.state = { repositories: [], currentSearchTerm: this.initialSearchTerm, pagination: initialPagination, isSearching: false, isAtLeastOneSearchDone: false };
   }
   componentDidMount() {
     if(this.initialSearchTerm) {
@@ -36,7 +38,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
             <div className="column is-one-fifth"><NavigationButtonsComponent pagination={{...this.state.pagination}} onMoveBackward={() => this.showPreviousPage()} onMoveForward={() => this.showNextPage()} /></div>
           </div>
         </div>
-        <div><SearchResultsComponent repositories={this.state.repositories} /></div>
+        <div><SearchResultsComponent isAtLeastOneSearchDone={this.state.isAtLeastOneSearchDone} repositories={this.state.repositories} isLoading={this.state.isSearching} /></div>
       </div>
     );
   }
@@ -51,9 +53,8 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
     this.setState(state => { return {...state, pagination: { ...state.pagination, currentPage: state.pagination.currentPage + 1}} }, () => this.loadSearchResults());
   }
   private async loadSearchResults() {
-    console.log('loadSearchResults', this.state);
+    this.setState({isSearching: true});
     const repositories = await this.props.githubClient.searchRepositories(this.state.currentSearchTerm, this.state.pagination.currentPage);
-    console.log("response 4", repositories);
-    this.setState(state => { return {...state, repositories: repositories.items, pagination: {...state.pagination, currentResultsTotal: repositories.totalCount, currentResultsPerPage: repositories.resultsPerPage}}});
+    this.setState(state => { return {...state, isSearching: false, isAtLeastOneSearchDone: true, repositories: repositories.items, pagination: {...state.pagination, currentResultsTotal: repositories.totalCount, currentResultsPerPage: repositories.resultsPerPage}}});
   }
 }

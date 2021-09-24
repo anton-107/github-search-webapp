@@ -19,8 +19,12 @@ export class SearchBarComponent extends React.Component<SearchBarComponentProps>
     return (
       <div>
         <form onSubmit={(e) => { e.preventDefault(); this.triggerSearch();}}>
-          <input className="input is-primary is-large" type="text" placeholder="Start typing a repository name here" ref={this.searchInput} />
-          <p>Type in your search string and hit [ENTER ⏎]</p>
+          <div className="field">
+            <div className="control is-large is-not-loading">
+              <input className="input is-primary is-large" type="text" placeholder="Start typing a repository name here" ref={this.searchInput} />
+            </div>
+            <p>Type in your search string and hit [ENTER ⏎]</p>
+          </div>
         </form>
       </div>
     );
