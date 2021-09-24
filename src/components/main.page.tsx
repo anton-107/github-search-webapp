@@ -14,15 +14,23 @@ interface MainPageState {
 }
 
 export class MainPage extends React.Component<MainPageProps, MainPageState> {
+  private initialSearchTerm: string;
+
   constructor(props: MainPageProps) {
     super(props);
     const initialPagination = { currentPage: 1 };
-    this.state = { repositories: [], currentSearchTerm: '', pagination: initialPagination };
+    this.initialSearchTerm = localStorage.getItem('searchTerm') || '';
+    this.state = { repositories: [], currentSearchTerm: this.initialSearchTerm, pagination: initialPagination };
+  }
+  componentDidMount() {
+    if(this.initialSearchTerm) {
+      this.changeSearchTerm(this.initialSearchTerm);
+    }
   }
   public render() {
     return (
       <div>
-        <div><SearchBarComponent onNewSearch={(searchTerm) => this.changeSearchTerm(searchTerm)} /></div>
+        <div><SearchBarComponent initialValue={this.initialSearchTerm} onNewSearch={(searchTerm) => this.changeSearchTerm(searchTerm)} /></div>
         <div><NavigationButtonsComponent pagination={{...this.state.pagination}} onMoveBackward={() => this.showPreviousPage()} onMoveForward={() => this.showNextPage()} /></div>
         <div><SearchResultsComponent repositories={this.state.repositories} /></div>
       </div>
@@ -30,6 +38,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
   }
   private async changeSearchTerm(searchTerm: string) {
     this.setState({currentSearchTerm: searchTerm}, this.loadSearchResults);
+    localStorage.setItem('searchTerm', searchTerm);
   }
   private showPreviousPage() {
     this.setState(state => { return {...state, pagination: { ...state.pagination, currentPage: Math.max(1, state.pagination.currentPage - 1)} }}, () => this.loadSearchResults())

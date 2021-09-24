@@ -1,11 +1,18 @@
 import React from "react";
 
 interface SearchBarComponentProps {
+  initialValue: string;
   onNewSearch: (searchTerm: string) => void;
 }
 
 export class SearchBarComponent extends React.Component<SearchBarComponentProps> {
   private searchInput = React.createRef<HTMLInputElement>();
+
+  public componentDidMount() {
+    if (this.searchInput.current) {
+      this.searchInput.current.value = this.props.initialValue;
+    }
+  }
 
   public render() {
     return (
