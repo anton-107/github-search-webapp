@@ -299,7 +299,40 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"MainPage\": () => (/* binding */ MainPage)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nclass MainPage extends react__WEBPACK_IMPORTED_MODULE_0__.Component {\n    render() {\n        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null,\n            react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null, \"Search bar\"),\n            react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null, \"Nav buttons\"),\n            react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null, \"Search results table\")));\n    }\n}\n\n\n//# sourceURL=webpack://github-search-webapp/./src/components/main.page.tsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"MainPage\": () => (/* binding */ MainPage)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n/* harmony import */ var _navigation_buttons_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navigation-buttons.components */ \"./src/components/navigation-buttons.components.tsx\");\n/* harmony import */ var _search_bar_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./search-bar.component */ \"./src/components/search-bar.component.tsx\");\n/* harmony import */ var _search_results_component___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./search-results.component  */ \"./src/components/search-results.component .tsx\");\n\n\n\n\nclass MainPage extends react__WEBPACK_IMPORTED_MODULE_0__.Component {\n    render() {\n        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null,\n            react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null,\n                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_search_bar_component__WEBPACK_IMPORTED_MODULE_2__.SearchBarComponent, null)),\n            react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null,\n                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_navigation_buttons_components__WEBPACK_IMPORTED_MODULE_1__.NavigationButtonsComponent, null)),\n            react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null,\n                react__WEBPACK_IMPORTED_MODULE_0__.createElement(_search_results_component___WEBPACK_IMPORTED_MODULE_3__.SearchResultsComponent, null))));\n    }\n}\n\n\n//# sourceURL=webpack://github-search-webapp/./src/components/main.page.tsx?");
+
+/***/ }),
+
+/***/ "./src/components/navigation-buttons.components.tsx":
+/*!**********************************************************!*\
+  !*** ./src/components/navigation-buttons.components.tsx ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"NavigationButtonsComponent\": () => (/* binding */ NavigationButtonsComponent)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nclass NavigationButtonsComponent extends react__WEBPACK_IMPORTED_MODULE_0__.Component {\n    render() {\n        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null,\n            react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"button\", null, \"Back\"),\n            react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"button\", null, \"Forward\")));\n    }\n}\n\n\n//# sourceURL=webpack://github-search-webapp/./src/components/navigation-buttons.components.tsx?");
+
+/***/ }),
+
+/***/ "./src/components/search-bar.component.tsx":
+/*!*************************************************!*\
+  !*** ./src/components/search-bar.component.tsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"SearchBarComponent\": () => (/* binding */ SearchBarComponent)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nclass SearchBarComponent extends react__WEBPACK_IMPORTED_MODULE_0__.Component {\n    render() {\n        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null,\n            react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"input\", { type: \"text\", placeholder: \"Start typing a repositort name here\" })));\n    }\n}\n\n\n//# sourceURL=webpack://github-search-webapp/./src/components/search-bar.component.tsx?");
+
+/***/ }),
+
+/***/ "./src/components/search-results.component .tsx":
+/*!******************************************************!*\
+  !*** ./src/components/search-results.component .tsx ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"SearchResultsComponent\": () => (/* binding */ SearchResultsComponent)\n/* harmony export */ });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nclass SearchResultsComponent extends react__WEBPACK_IMPORTED_MODULE_0__.Component {\n    render() {\n        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"div\", null,\n            react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"table\", null,\n                react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"tbody\", null,\n                    react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"tr\", null,\n                        react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"td\", null, \"1.1\"),\n                        react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"td\", null, \"1.2\"),\n                        react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"td\", null, \"1.3\")),\n                    react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"tr\", null,\n                        react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"td\", null, \"2.1\"),\n                        react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"td\", null, \"2.2\"),\n                        react__WEBPACK_IMPORTED_MODULE_0__.createElement(\"td\", null, \"2.3\"))))));\n    }\n}\n\n\n//# sourceURL=webpack://github-search-webapp/./src/components/search-results.component_.tsx?");
 
 /***/ }),
 
