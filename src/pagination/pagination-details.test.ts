@@ -1,11 +1,11 @@
-import {PaginatonDetails} from './pagination-details';
+import { PaginatonDetails } from "./pagination-details";
 
-describe('PaginatonDetails', () => {
-  test('should show first page', () => {
+describe("PaginatonDetails", () => {
+  test("should show first page", () => {
     const pagination = new PaginatonDetails({
       currentPage: 1,
       currentResultsTotal: 8,
-      currentResultsPerPage: 10
+      currentResultsPerPage: 10,
     });
 
     expect(pagination.firstDisplayedItem).toBe(1);
@@ -13,11 +13,11 @@ describe('PaginatonDetails', () => {
     expect(pagination.hasNextPage).toBe(false);
     expect(pagination.hasPreviousPage).toBe(false);
   });
-  test('should show last page', () => {
+  test("should show last page", () => {
     const pagination = new PaginatonDetails({
       currentPage: 2,
       currentResultsTotal: 18,
-      currentResultsPerPage: 10
+      currentResultsPerPage: 10,
     });
 
     expect(pagination.firstDisplayedItem).toBe(11);
@@ -25,11 +25,11 @@ describe('PaginatonDetails', () => {
     expect(pagination.hasNextPage).toBe(false);
     expect(pagination.hasPreviousPage).toBe(true);
   });
-  test('should show middle page', () => {
+  test("should show middle page", () => {
     const pagination = new PaginatonDetails({
       currentPage: 6,
       currentResultsTotal: 1845,
-      currentResultsPerPage: 30
+      currentResultsPerPage: 30,
     });
 
     expect(pagination.firstDisplayedItem).toBe(151);
@@ -37,7 +37,7 @@ describe('PaginatonDetails', () => {
     expect(pagination.hasNextPage).toBe(true);
     expect(pagination.hasPreviousPage).toBe(true);
   });
-  test('should throw errors if not fully initialized', () => {
+  test("should throw errors if not fully initialized", () => {
     const pagination = new PaginatonDetails({ currentPage: 1 });
     expect(() => pagination.firstDisplayedItem).toThrowError();
     expect(() => pagination.lastDisplayedItem).toThrowError();

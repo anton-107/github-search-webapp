@@ -1,15 +1,26 @@
-import { GitHubClient, GitHubCommit, GitHubFork, GitHubRepository, GitHubSearchResult, GitHubUser } from "./interfaces";
+import {
+  GitHubClient,
+  GitHubCommit,
+  GitHubFork,
+  GitHubRepository,
+  GitHubSearchResult,
+  GitHubUser,
+} from "./interfaces";
 
 export class GitHubClientWithInMemoryCache implements GitHubClient {
   public searchCache: Record<string, Record<number, GitHubSearchResult>> = {};
-  private repositoryCache: Record<string, Record<string, GitHubRepository>> = {};
+  private repositoryCache: Record<string, Record<string, GitHubRepository>> =
+    {};
   private commitsCache: Record<string, GitHubCommit[]> = {};
   private forksCache: Record<string, GitHubFork[]> = {};
   private userCache: Record<string, GitHubUser> = {};
 
   constructor(private nonCachedClient: GitHubClient) {}
 
-  public async searchRepositories(query: string, page: number): Promise<GitHubSearchResult> {
+  public async searchRepositories(
+    query: string,
+    page: number
+  ): Promise<GitHubSearchResult> {
     if (this.searchCache[query] && this.searchCache[query][page]) {
       return this.searchCache[query][page];
     }
@@ -20,7 +31,10 @@ export class GitHubClientWithInMemoryCache implements GitHubClient {
     this.searchCache[query][page] = results;
     return results;
   }
-  public async getRepository(owner: string, name: string): Promise<GitHubRepository> {
+  public async getRepository(
+    owner: string,
+    name: string
+  ): Promise<GitHubRepository> {
     if (this.repositoryCache[owner] && this.repositoryCache[owner][name]) {
       return this.repositoryCache[owner][name];
     }
@@ -41,7 +55,7 @@ export class GitHubClientWithInMemoryCache implements GitHubClient {
   }
   public async getForks(forksURL: string): Promise<GitHubFork[]> {
     if (this.forksCache[forksURL]) {
-      console.log('getForks cache hit');
+      console.log("getForks cache hit");
       return this.forksCache[forksURL];
     }
     const results = await this.nonCachedClient.getForks(forksURL);
@@ -50,7 +64,7 @@ export class GitHubClientWithInMemoryCache implements GitHubClient {
   }
   public async getUser(userURL: string): Promise<GitHubUser> {
     if (this.userCache[userURL]) {
-      console.log('getUser cache hit');
+      console.log("getUser cache hit");
       return this.userCache[userURL];
     }
     const results = await this.nonCachedClient.getUser(userURL);

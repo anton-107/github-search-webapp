@@ -6,7 +6,10 @@
   "scripts": {
     "test": "jest --coverage",
     "watch": "webpack --config webpack.config.js --watch",
-    "start": "webpack serve"
+    "start": "webpack serve",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --quiet",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix"
   },
   "author": "Anton Nekipelov",
   "license": "",

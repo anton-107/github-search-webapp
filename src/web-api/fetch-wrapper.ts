@@ -5,7 +5,9 @@ export class FetchWrapper implements ResourceFetcher {
     const request = await fetch(url);
     const response = await request.json();
     if (request.status > 299) {
-      throw Error(`Failed to fetch resource: ${request.status} ${response.message}`);
+      throw Error(
+        `Failed to fetch resource: ${request.status} ${response.message}`
+      );
     }
     return response;
   }
