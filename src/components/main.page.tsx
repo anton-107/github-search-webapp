@@ -2,7 +2,7 @@ import React from "react";
 import { GitHubClient, GitHubRepository } from "../github-client/interfaces";
 import { NavigationButtonsComponent, Pagination } from "./navigation-buttons.components";
 import { SearchBarComponent } from "./search-bar.component";
-import { SearchResultsComponent } from "./search-results.component ";
+import { SearchResultsComponent } from "./search-results.component";
 
 interface MainPageProps {
   githubClient: GitHubClient;

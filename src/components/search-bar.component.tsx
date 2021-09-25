@@ -18,7 +18,7 @@ export class SearchBarComponent extends React.Component<SearchBarComponentProps>
   public render() {
     return (
       <div>
-        <form onSubmit={(e) => { e.preventDefault(); this.triggerSearch();}}>
+        <form onSubmit={(e) => { e.preventDefault(); this.triggerSearch();}} data-testid="search-form">
           <div className="field">
             <div className="control is-large is-not-loading">
               <input className="input is-primary is-large" type="text" placeholder="Start typing a repository name here" ref={this.searchInput} />

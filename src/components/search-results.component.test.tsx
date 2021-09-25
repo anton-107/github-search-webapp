@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import { buildExampleGitHubRepository } from './main.app.test';
-import { SearchResultsComponent } from './search-results.component ';
+import { SearchResultsComponent } from './search-results.component';
 import { fireEvent, render, screen} from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
