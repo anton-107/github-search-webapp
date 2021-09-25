@@ -1,6 +1,7 @@
 import React from "react";
 import { GitHubClient, GitHubRepository } from "../github-client/interfaces";
-import { NavigationButtonsComponent, Pagination } from "./navigation-buttons.component";
+import { Pagination } from "../pagination/pagination-details";
+import { NavigationButtonsComponent } from "./navigation-buttons.component";
 import { SearchBarComponent } from "./search-bar.component";
 import { SearchResultsComponent } from "./search-results.component";
 

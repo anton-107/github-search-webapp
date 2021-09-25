@@ -21,7 +21,7 @@ describe('SearchBarComponent', () => {
     const mockNewSearch = jest.fn();
     render(<SearchBarComponent initialValue='' onNewSearch={mockNewSearch} />);
     expect(screen.getByRole('textbox')).toHaveValue('');
-    fireEvent.change(screen.getByRole('textbox'), {target: {value: 'spark'}})
+    fireEvent.change(screen.getByRole('textbox'), {target: {value: 'spark'}});
     fireEvent.submit(screen.getByTestId('search-form'));
     expect(mockNewSearch).toBeCalledWith('spark');
   });

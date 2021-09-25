@@ -26,7 +26,7 @@ export class SearchResultsComponent extends React.Component<SearchResultsCompone
           <div className="notification is-danger">
             <p><strong>Oops! There was an error proceeding search request:</strong> </p>
             <p>{this.props.searchError}</p>
-            <p><button className='button' onClick={() => this.props.onRetry()}>Please try again</button></p>
+            <p><button className='button' onClick={() => this.props.onRetry()} data-testid="retry-button">Please try again</button></p>
           </div>
         )}
         

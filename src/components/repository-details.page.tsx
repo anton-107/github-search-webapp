@@ -40,7 +40,7 @@ export class RepositoryDetailsPage extends React.Component<RepositoryDetailsPage
       <div>
         <div className="columns">
           <div className="column is-one-fifth">
-            <Link to="/" className="button">← Back to search</Link>
+            <Link to="/" className="button" data-testid="back-to-search-button">← Back to search</Link>
           </div>
           <div className="column">
             <div className="box">

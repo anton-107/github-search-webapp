@@ -9,7 +9,7 @@ const emptyFn = () => {};
 
 describe('SearchResultsComponent', () => {
   test('should show list of repositories', () => {
-    const repositories = Array.from({length: 10}, (x, i) => buildExampleGitHubRepository(i));
+    const repositories = Array.from({length: 10}, (x, i) => buildExampleGitHubRepository('repo', i));
     render(<BrowserRouter><SearchResultsComponent onRetry={emptyFn} repositories={repositories} isLoading={false} isAtLeastOneSearchDone={true} searchError={null} /></BrowserRouter>);
     expect(screen.getByText('repo-0')).toBeVisible();
     expect(screen.getByText('repo-1')).toBeVisible();
