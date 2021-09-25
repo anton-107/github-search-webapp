@@ -1,13 +1,13 @@
 import { ResourceFetcher } from "../web-api/interfaces";
 import { GitHubClient, GitHubCommit, GitHubFork, GitHubRepository, GitHubSearchResult, GitHubUser } from "./interfaces";
 
-interface OriginGitHubUser {
+export interface OriginGitHubUser {
   login: string;
   url: string;
   bio: string;
 }
 
-interface OriginGitHubRepository {
+export interface OriginGitHubRepository {
   id: number;
   name: string;
   full_name: string;
@@ -24,10 +24,10 @@ interface OriginGitHubSearchResult {
 interface GitHubClientConfiguration {
   numberOfRepositoriesPerPage: number;
 }
-interface OriginGitHubCommit {
+export interface OriginGitHubCommit {
   author: OriginGitHubUser;
 }
-interface OriginGitHubFork {
+export interface OriginGitHubFork {
   owner: OriginGitHubUser;
 }
 
