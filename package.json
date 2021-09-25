@@ -4,6 +4,7 @@
   "description": "GitHub repositories search app",
   "main": "index.ts",
   "scripts": {
+    "build": "webpack",
     "test": "jest --coverage",
     "watch": "webpack --config webpack.config.js --watch",
     "start": "webpack serve",

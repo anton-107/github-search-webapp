@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { GitHubClient, GitHubRepository } from "../github-client/interfaces";
 import { Pagination } from "../pagination/pagination-details";
 import { NavigationButtonsComponent } from "./navigation-buttons.component";
@@ -33,12 +33,12 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
       searchError: null,
     };
   }
-  componentDidMount() {
+  public componentDidMount(): void {
     if (this.initialSearchTerm) {
       this.changeSearchTerm(this.initialSearchTerm);
     }
   }
-  public render() {
+  public render(): ReactNode {
     let repositories: GitHubRepository[] = [];
     if (
       this.state.repositories[this.state.currentSearchTerm] &&

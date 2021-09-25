@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { GitHubRepository } from "../github-client/interfaces";
 
@@ -11,7 +11,7 @@ interface SearchResultsComponentProps {
 }
 
 export class SearchResultsComponent extends React.Component<SearchResultsComponentProps> {
-  public render() {
+  public render(): ReactNode {
     return (
       <div>
         <progress
@@ -73,7 +73,7 @@ export class SearchResultsComponent extends React.Component<SearchResultsCompone
                 <td>{repository.owner.login}</td>
                 <td>{repository.stargazersCount}</td>
                 <td>
-                  <a target="_blank" href={repository.htmlURL}>
+                  <a target="_blank" href={repository.htmlURL} rel="noreferrer">
                     {repository.fullName}
                   </a>
                 </td>

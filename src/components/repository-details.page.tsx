@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
   GitHubClient,
@@ -39,11 +39,11 @@ export class RepositoryDetailsPage extends React.Component<
     };
   }
 
-  public componentDidMount() {
+  public componentDidMount(): void {
     this.loadRepositoryDetails();
   }
 
-  public render() {
+  public render(): ReactNode {
     const isLoading =
       this.state.isRepositoryLoading ||
       this.state.isLastCommitInfoLoading ||

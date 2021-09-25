@@ -3,7 +3,9 @@ import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { SearchBarComponent } from "./search-bar.component";
 
-const emptyFn = () => {};
+const emptyFn = (): void => {
+  // explicitly empty
+};
 
 describe("SearchBarComponent", () => {
   test("should display initial value", () => {

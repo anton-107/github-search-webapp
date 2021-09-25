@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 interface SearchBarComponentProps {
   initialValue: string;
@@ -8,14 +8,14 @@ interface SearchBarComponentProps {
 export class SearchBarComponent extends React.Component<SearchBarComponentProps> {
   private searchInput = React.createRef<HTMLInputElement>();
 
-  public componentDidMount() {
+  public componentDidMount(): void {
     if (this.searchInput.current) {
       this.searchInput.current.value = this.props.initialValue;
       this.searchInput.current.focus();
     }
   }
 
-  public render() {
+  public render(): ReactNode {
     return (
       <div>
         <form

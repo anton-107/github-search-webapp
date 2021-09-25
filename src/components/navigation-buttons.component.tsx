@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Pagination, PaginatonDetails } from "../pagination/pagination-details";
 
 interface NavigationButtonsComponentProps {
@@ -8,7 +8,7 @@ interface NavigationButtonsComponentProps {
 }
 
 export class NavigationButtonsComponent extends React.Component<NavigationButtonsComponentProps> {
-  public render() {
+  public render(): ReactNode {
     const paginationDetails = new PaginatonDetails(this.props.pagination);
     let paginationLine = <span></span>;
     if (

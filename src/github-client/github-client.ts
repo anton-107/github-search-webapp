@@ -45,7 +45,7 @@ export class GitHubClientImpl implements GitHubClient {
   ) {}
   public async searchRepositories(
     query: string,
-    page: number = 1
+    page = 1
   ): Promise<GitHubSearchResult> {
     const githubResults =
       await this.resourceFetcher.fetch<OriginGitHubSearchResult>(

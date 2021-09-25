@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { GitHubClient } from "../github-client/interfaces";
 import { MainPage } from "./main.page";
@@ -9,7 +9,7 @@ interface GitHubSearchAppProps {
 }
 
 export class GitHubSearchApp extends React.Component<GitHubSearchAppProps> {
-  public render() {
+  public render(): ReactNode {
     return (
       <div className="container px-1 pb-6">
         <div className="columns is-gapless">
