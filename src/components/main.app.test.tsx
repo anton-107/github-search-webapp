@@ -2,7 +2,7 @@ import React from 'react'
 import {GitHubSearchApp} from './main.app';
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import '@testing-library/dom';
-import { GitHubCommit, GitHubFork, GitHubRepository, GitHubSearchResult } from '../github-client/interfaces';
+import { GitHubCommit, GitHubFork, GitHubRepository, GitHubSearchResult, GitHubUser } from '../github-client/interfaces';
 
 export const buildExampleGitHubRepository: (id: number) => GitHubRepository = (id: number) => {
   return {
@@ -12,8 +12,8 @@ export const buildExampleGitHubRepository: (id: number) => GitHubRepository = (i
     owner: {login: `owner-${id}`, url: '', bio: ''},
     stargazersCount: 0,
     htmlURL: '',
-    commitsURL: '',
-    forksURL: ''
+    commitsURL: 'commitsURL',
+    forksURL: 'forksURL'
   }
 };
 
@@ -35,13 +35,20 @@ describe('GitHubSearchApp', () => {
         },
         getCommits(): Promise<GitHubCommit[]> {
           return Promise.resolve([
-            
+            {authorLogin: 'commit-author-01'}
           ]);
         },
         getForks(): Promise<GitHubFork[]> {
           return Promise.resolve([
-            
+            {ownerLogin: 'fork-owner-01', ownerURL: 'path/to/owner'}
           ]);
+        },
+        getUser(): Promise<GitHubUser> {
+          return Promise.resolve({
+            login: 'fork-owner-01',
+            url: '',
+            bio: 'Fork enthusiast'
+          });
         }
       }
     });

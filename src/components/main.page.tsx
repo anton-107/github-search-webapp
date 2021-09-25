@@ -75,7 +75,6 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
         }
       );
     } catch (err) {
-      console.log('Error loading: ', err);
       this.setState(state => { return {...state, isSearching: false, searchError: (err as Error).message, pagination: {...state.pagination, currentResultsTotal: undefined, currentResultsPerPage: undefined}}});
     }
   }
