@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { GitHubRepository } from "../github-client/interfaces";
 
 interface SearchResultsComponentProps {
+  onRetry: () => void;
   repositories: GitHubRepository[];
   isLoading: boolean;
   isAtLeastOneSearchDone: boolean;
@@ -14,7 +15,7 @@ export class SearchResultsComponent extends React.Component<SearchResultsCompone
     return (
       <div>
         <progress className="progress is-small is-info" max="100" style={{visibility: this.props.isLoading ? 'visible' : 'hidden'}}></progress>
-        {this.props.isAtLeastOneSearchDone && this.props.repositories.length === 0 && (
+        {this.props.isAtLeastOneSearchDone && this.props.repositories.length === 0 && !this.props.isLoading && !this.props.searchError && (
         <div className="box">
           <div className="content" style={{textAlign: 'center'}}>
             <big>No repositories found</big>
@@ -25,7 +26,7 @@ export class SearchResultsComponent extends React.Component<SearchResultsCompone
           <div className="notification is-danger">
             <p><strong>Oops! There was an error proceeding search request:</strong> </p>
             <p>{this.props.searchError}</p>
-            <p>Please try again</p>
+            <p><button className='button' onClick={() => this.props.onRetry()}>Please try again</button></p>
           </div>
         )}
         

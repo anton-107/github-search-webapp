@@ -8,7 +8,7 @@ interface MainPageProps {
   githubClient: GitHubClient;
 }
 interface MainPageState {
-  repositories: GitHubRepository[];
+  repositories: Record<string, Record<number, GitHubRepository[]>>;
   currentSearchTerm: string;
   pagination: Pagination;
   isSearching: boolean;
@@ -23,7 +23,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
     super(props);
     const initialPagination = { currentPage: 1 };
     this.initialSearchTerm = localStorage.getItem('searchTerm') || '';
-    this.state = { repositories: [], currentSearchTerm: this.initialSearchTerm, pagination: initialPagination, isSearching: false, isAtLeastOneSearchDone: false, searchError: null };
+    this.state = { repositories: {}, currentSearchTerm: this.initialSearchTerm, pagination: initialPagination, isSearching: false, isAtLeastOneSearchDone: false, searchError: null };
   }
   componentDidMount() {
     if(this.initialSearchTerm) {
@@ -31,6 +31,11 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
     }
   }
   public render() {
+    let repositories: GitHubRepository[] = [];
+    if (this.state.repositories[this.state.currentSearchTerm] && this.state.repositories[this.state.currentSearchTerm][this.state.pagination.currentPage]) {
+      repositories = this.state.repositories[this.state.currentSearchTerm][this.state.pagination.currentPage];
+    }
+    
     return (
       <div>
         <div className="box">
@@ -39,7 +44,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
             <div className="column is-one-fifth"><NavigationButtonsComponent pagination={{...this.state.pagination}} onMoveBackward={() => this.showPreviousPage()} onMoveForward={() => this.showNextPage()} /></div>
           </div>
         </div>
-        <div><SearchResultsComponent isAtLeastOneSearchDone={this.state.isAtLeastOneSearchDone} repositories={this.state.repositories} isLoading={this.state.isSearching} searchError={this.state.searchError} /></div>
+        <div><SearchResultsComponent isAtLeastOneSearchDone={this.state.isAtLeastOneSearchDone} repositories={repositories} isLoading={this.state.isSearching} searchError={this.state.searchError} onRetry={() => this.loadSearchResults()} /></div>
       </div>
     );
   }
@@ -56,11 +61,22 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
   private async loadSearchResults() {
     this.setState({isSearching: true});
     try {
-      const repositories = await this.props.githubClient.searchRepositories(this.state.currentSearchTerm, this.state.pagination.currentPage);
-      this.setState(state => { return {...state, isSearching: false, isAtLeastOneSearchDone: true, repositories: repositories.items, searchError: null, pagination: {...state.pagination, currentResultsTotal: repositories.totalCount, currentResultsPerPage: repositories.resultsPerPage}}});
+      const searchTerm = this.state.currentSearchTerm;
+      const currentPage = this.state.pagination.currentPage;
+      const repositories = await this.props.githubClient.searchRepositories(searchTerm, currentPage);
+      this.setState((state) => {
+        const savedRepositories = {...state.repositories};
+        if (!savedRepositories[searchTerm]) {
+          savedRepositories[searchTerm] = {};
+        }
+        savedRepositories[searchTerm][currentPage] = repositories.items;
+        return {
+          ...state, isSearching: false, isAtLeastOneSearchDone: true, repositories: savedRepositories, searchError: null, pagination: {...state.pagination, currentResultsTotal: repositories.totalCount, currentResultsPerPage: repositories.resultsPerPage}}
+        }
+      );
     } catch (err) {
       console.log('Error loading: ', err);
-      this.setState(state => { return {...state, isSearching: false, searchError: (err as Error).message, repositories: [], pagination: {...state.pagination, currentResultsTotal: undefined, currentResultsPerPage: undefined}}});
+      this.setState(state => { return {...state, isSearching: false, searchError: (err as Error).message, pagination: {...state.pagination, currentResultsTotal: undefined, currentResultsPerPage: undefined}}});
     }
   }
 }
