@@ -55,7 +55,6 @@ export class GitHubClientWithInMemoryCache implements GitHubClient {
   }
   public async getForks(forksURL: string): Promise<GitHubFork[]> {
     if (this.forksCache[forksURL]) {
-      console.log("getForks cache hit");
       return this.forksCache[forksURL];
     }
     const results = await this.nonCachedClient.getForks(forksURL);
@@ -64,7 +63,6 @@ export class GitHubClientWithInMemoryCache implements GitHubClient {
   }
   public async getUser(userURL: string): Promise<GitHubUser> {
     if (this.userCache[userURL]) {
-      console.log("getUser cache hit");
       return this.userCache[userURL];
     }
     const results = await this.nonCachedClient.getUser(userURL);
