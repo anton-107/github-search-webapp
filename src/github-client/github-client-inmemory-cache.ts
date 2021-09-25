@@ -1,7 +1,7 @@
 import { GitHubClient, GitHubCommit, GitHubFork, GitHubRepository, GitHubSearchResult, GitHubUser } from "./interfaces";
 
 export class GitHubClientWithInMemoryCache implements GitHubClient {
-  private searchCache: Record<string, Record<number, GitHubSearchResult>> = {};
+  public searchCache: Record<string, Record<number, GitHubSearchResult>> = {};
   private repositoryCache: Record<string, Record<string, GitHubRepository>> = {};
   private commitsCache: Record<string, GitHubCommit[]> = {};
   private forksCache: Record<string, GitHubFork[]> = {};
@@ -11,7 +11,6 @@ export class GitHubClientWithInMemoryCache implements GitHubClient {
 
   public async searchRepositories(query: string, page: number): Promise<GitHubSearchResult> {
     if (this.searchCache[query] && this.searchCache[query][page]) {
-      console.log('searchRepositories cache hit');
       return this.searchCache[query][page];
     }
     const results = await this.nonCachedClient.searchRepositories(query, page);
@@ -23,7 +22,6 @@ export class GitHubClientWithInMemoryCache implements GitHubClient {
   }
   public async getRepository(owner: string, name: string): Promise<GitHubRepository> {
     if (this.repositoryCache[owner] && this.repositoryCache[owner][name]) {
-      console.log('getRepository cache hit');
       return this.repositoryCache[owner][name];
     }
     const results = await this.nonCachedClient.getRepository(owner, name);
@@ -35,7 +33,6 @@ export class GitHubClientWithInMemoryCache implements GitHubClient {
   }
   public async getCommits(commitsURL: string): Promise<GitHubCommit[]> {
     if (this.commitsCache[commitsURL]) {
-      console.log('getCommits cache hit');
       return this.commitsCache[commitsURL];
     }
     const results = await this.nonCachedClient.getCommits(commitsURL);
