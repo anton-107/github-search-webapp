@@ -4,7 +4,7 @@ import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import '@testing-library/dom';
 import { GitHubCommit, GitHubFork, GitHubRepository, GitHubSearchResult } from '../github-client/interfaces';
 
-const buildExampleGitHubRepository: (id: number) => GitHubRepository = (id: number) => {
+export const buildExampleGitHubRepository: (id: number) => GitHubRepository = (id: number) => {
   return {
     id: id,
     name: `repo-${id}`,
@@ -18,7 +18,7 @@ const buildExampleGitHubRepository: (id: number) => GitHubRepository = (id: numb
 };
 
 describe('GitHubSearchApp', () => {
-  test('Basic scenario: listing repositories and clicking on details', async () => {
+  test('should implement scenario: listing repositories and clicking on details', async () => {
     const MockedGitHubClient = jest.fn().mockImplementation(() => {
       return {
         searchRepositories(): Promise<GitHubSearchResult> {
@@ -49,7 +49,7 @@ describe('GitHubSearchApp', () => {
 
     localStorage.setItem('searchTerm', 'apache spark');
 
-    render(<GitHubSearchApp githubClient={mockedClient} />)
+    render(<GitHubSearchApp githubClient={mockedClient} />);
     expect(screen.getByRole('heading').innerHTML).toMatch('GitHub repository list');
 
     await waitFor(() => screen.getByText('Show details', {selector: 'a[href="/repository/owner-6/repo-6"]'}));
