@@ -13,6 +13,7 @@ interface MainPageState {
   pagination: Pagination;
   isSearching: boolean;
   isAtLeastOneSearchDone: boolean;
+  searchError: string | null;
 }
 
 export class MainPage extends React.Component<MainPageProps, MainPageState> {
@@ -22,7 +23,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
     super(props);
     const initialPagination = { currentPage: 1 };
     this.initialSearchTerm = localStorage.getItem('searchTerm') || '';
-    this.state = { repositories: [], currentSearchTerm: this.initialSearchTerm, pagination: initialPagination, isSearching: false, isAtLeastOneSearchDone: false };
+    this.state = { repositories: [], currentSearchTerm: this.initialSearchTerm, pagination: initialPagination, isSearching: false, isAtLeastOneSearchDone: false, searchError: null };
   }
   componentDidMount() {
     if(this.initialSearchTerm) {
@@ -38,7 +39,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
             <div className="column is-one-fifth"><NavigationButtonsComponent pagination={{...this.state.pagination}} onMoveBackward={() => this.showPreviousPage()} onMoveForward={() => this.showNextPage()} /></div>
           </div>
         </div>
-        <div><SearchResultsComponent isAtLeastOneSearchDone={this.state.isAtLeastOneSearchDone} repositories={this.state.repositories} isLoading={this.state.isSearching} /></div>
+        <div><SearchResultsComponent isAtLeastOneSearchDone={this.state.isAtLeastOneSearchDone} repositories={this.state.repositories} isLoading={this.state.isSearching} searchError={this.state.searchError} /></div>
       </div>
     );
   }
@@ -54,7 +55,12 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
   }
   private async loadSearchResults() {
     this.setState({isSearching: true});
-    const repositories = await this.props.githubClient.searchRepositories(this.state.currentSearchTerm, this.state.pagination.currentPage);
-    this.setState(state => { return {...state, isSearching: false, isAtLeastOneSearchDone: true, repositories: repositories.items, pagination: {...state.pagination, currentResultsTotal: repositories.totalCount, currentResultsPerPage: repositories.resultsPerPage}}});
+    try {
+      const repositories = await this.props.githubClient.searchRepositories(this.state.currentSearchTerm, this.state.pagination.currentPage);
+      this.setState(state => { return {...state, isSearching: false, isAtLeastOneSearchDone: true, repositories: repositories.items, searchError: null, pagination: {...state.pagination, currentResultsTotal: repositories.totalCount, currentResultsPerPage: repositories.resultsPerPage}}});
+    } catch (err) {
+      console.log('Error loading: ', err);
+      this.setState(state => { return {...state, isSearching: false, searchError: (err as Error).message, repositories: [], pagination: {...state.pagination, currentResultsTotal: undefined, currentResultsPerPage: undefined}}});
+    }
   }
 }

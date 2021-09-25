@@ -6,6 +6,7 @@ interface SearchResultsComponentProps {
   repositories: GitHubRepository[];
   isLoading: boolean;
   isAtLeastOneSearchDone: boolean;
+  searchError: string | null;
 }
 
 export class SearchResultsComponent extends React.Component<SearchResultsComponentProps> {
@@ -20,6 +21,14 @@ export class SearchResultsComponent extends React.Component<SearchResultsCompone
           </div>
         </div>
         )}
+        {this.props.searchError && (
+          <div className="notification is-danger">
+            <p><strong>Oops! There was an error proceeding search request:</strong> </p>
+            <p>{this.props.searchError}</p>
+            <p>Please try again</p>
+          </div>
+        )}
+        
         <table className="table is-striped is-hoverable is-fullwidth" style={{opacity: this.props.isLoading ? '0.4' : '1.0', visibility: this.props.repositories.length > 0 ? 'visible' : 'hidden' }}>
           <thead>
             <tr>

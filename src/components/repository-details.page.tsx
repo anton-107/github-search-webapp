@@ -48,7 +48,7 @@ export class RepositoryDetailsPage extends React.Component<RepositoryDetailsPage
               <div className="content">
                 <h3>{this.props.owner}/{this.props.name}</h3>
                 <p>Last 3 commits by: {this.state.isLastCommitInfoLoading && 'Loading...'} {this.getUniqueAuthorsOfLastCommits()}</p>
-                <p>Last fork created by: {this.state.isLastForkInfoLoading && 'Loading...'} {this.getLastForkUserLogin()}</p>
+                <p>Last fork created by: {this.state.isLastForkInfoLoading && 'Loading...'} {!isLoading && (this.getLastForkUserLogin() || '<This repository has not been forked>')}</p>
                 <p>The owner of the last fork has this in their biography: {this.state.isLastForkAuthorInfoLoading && 'Loading...'} {!isLoading && (this.state.mostRecentForkAuthorBio || '<Their BIO is empty>')}</p>
               </div>
             </div>
